@@ -7,8 +7,8 @@ on:
       - '.github/workflows/ci.yml'
 
 jobs:
-  build:
-    name: Build
+  build-csharp:
+    name: Build (C#)
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -41,8 +41,38 @@ jobs:
         run: dotnet restore .
       - name: Build
         run: dotnet build --no-restore --configuration Release src/Backend/Backend.csproj
+  build-docker:
+    needs: build-csharp
+    name: Build (Docker)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.2.2
+      - name: Setup QEMU
+        uses: docker/setup-qemu-action@v3.4.0
+      - name: Docker Setup Buildx
+        uses: docker/setup-buildx-action@v3.9.0
+      - name: Build Docker image
+        uses: docker/build-push-action@v6.13.0
+        with:
+          context: .
+          file: src/Backend/Dockerfile
+          push: false
+          tags: inventarisierung-backend:dev
+          secrets: |
+            github_user=${{ github.actor }}
+            github_token=${{ github.token }}
+            hangfire_ace_url=${{ secrets.HANGFIRE_ACE_URL }}
+            hangfire_ace_user=${{ secrets.HANGFIRE_ACE_USER }}
+            hangfire_ace_token=${{ secrets.HANGFIRE_ACE_TOKEN }}
+            hangfire_pro_url=${{ secrets.HANGFIRE_PRO_URL }}
+            hangfire_pro_user=${{ secrets.HANGFIRE_PRO_USER }}
+            hangfire_pro_token=${{ secrets.HANGFIRE_PRO_TOKEN }}
   test:
-    needs: build
+    needs: build-csharp
     name: Test
     runs-on: ubuntu-latest
     permissions:
