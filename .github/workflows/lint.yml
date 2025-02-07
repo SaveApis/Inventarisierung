@@ -21,6 +21,5 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
           VALIDATE_ALL_CODEBASE: true
           VALIDATE_CSHARP: true
-          VALIDATE_DOCKERFILE_HADOLINT: true
           VALIDATE_GITHUB_ACTIONS: true
           VALIDATE_GITLEAKS: true

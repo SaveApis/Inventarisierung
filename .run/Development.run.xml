@@ -9,6 +9,7 @@
           <list>
             <option value="backend-server" />
             <option value="backend-worker" />
+            <option value="backend-backend" />
           </list>
         </option>
         <option name="sourceFilePath" value="Docker/docker-compose.yml" />

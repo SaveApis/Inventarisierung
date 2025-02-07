@@ -1,4 +1,27 @@
 services:
+  backend-backend:
+    depends_on:
+      redis:
+        condition: service_healthy
+        required: true
+    hostname: backend
+    image: inventarisierung:dev
+    build:
+      context: ..
+      dockerfile: src/Backend/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=80
+      - server_type=backend
+      - hangfire_redis_server=redis
+      - hangfire_redis_port=6379
+      - hangfire_redis_database=0
+      - "hangfire_redis_prefix=inventarisierung:prefix:"
+      - jwt_issuer=inventarisierung
+      - jwt_audience=inventarisierung
+      - jwt_key=<key>
+    ports:
+      - "80:80"
   backend-server:
     depends_on:
       redis:
@@ -12,7 +35,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=80
-      - hangfire_server_type=server
+      - server_type=server
       - hangfire_redis_server=redis
       - hangfire_redis_port=6379
       - hangfire_redis_database=0
@@ -20,8 +43,8 @@ services:
       - jwt_issuer=inventarisierung
       - jwt_audience=inventarisierung
       - jwt_key=<key>
-    ports:
-      - "80:80"
+    labels:
+      com.jetbrains.rider.debug: "false"
   backend-worker:
     depends_on:
       redis:
@@ -35,7 +58,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=80
-      - hangfire_server_type=worker
+      - server_type=worker
       - hangfire_redis_server=redis
       - hangfire_redis_port=6379
       - hangfire_redis_database=0
