@@ -34,7 +34,7 @@ jobs:
         run: dotnet tool restore
       - name: Read version
         id: version
-        run: echo "version=$(dotnet versionize inspect) >> $GITHUB_OUTPUT"
+        run: echo "version=$(dotnet versionize inspect)" >> "$GITHUB_OUTPUT"
       - name: Docker Login
         uses: docker/login-action@v3.3.0
         with:
