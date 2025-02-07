@@ -13,3 +13,10 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "daily"
+
+registries:
+  saveapis:
+    type: nuget-feed
+    url: https://nuget.pkg.github.com/SaveApis/index.json
+    username: ${{ github.actor }}
+    password: ${{ github.token }}
