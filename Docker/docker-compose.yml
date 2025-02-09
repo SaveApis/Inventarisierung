@@ -4,6 +4,9 @@ services:
       redis:
         condition: service_healthy
         required: true
+      mysql:
+        condition: service_healthy
+        required: true
     hostname: backend
     image: inventarisierung:dev
     build:
@@ -20,6 +23,12 @@ services:
       - jwt_issuer=inventarisierung
       - jwt_audience=inventarisierung
       - jwt_key=<key>
+      - database_sql_name=Inventarisierung
+      - database_sql_server=mysql
+      - database_sql_port=3306
+      - database_sql_database=inventarisierung
+      - database_sql_user=inventarisierung
+      - database_sql_password=inventarisierung
     ports:
       - "80:80"
   backend-server:
@@ -40,14 +49,14 @@ services:
       - hangfire_redis_port=6379
       - hangfire_redis_database=0
       - "hangfire_redis_prefix=inventarisierung:prefix:"
-      - jwt_issuer=inventarisierung
-      - jwt_audience=inventarisierung
-      - jwt_key=<key>
     labels:
       com.jetbrains.rider.debug: "false"
   backend-worker:
     depends_on:
       redis:
+        condition: service_healthy
+        required: true
+      mysql:
         condition: service_healthy
         required: true
     hostname: backend
@@ -63,9 +72,12 @@ services:
       - hangfire_redis_port=6379
       - hangfire_redis_database=0
       - "hangfire_redis_prefix=inventarisierung:prefix:"
-      - jwt_issuer=inventarisierung
-      - jwt_audience=inventarisierung
-      - jwt_key=<key>
+      - database_sql_name=Inventarisierung
+      - database_sql_server=mysql
+      - database_sql_port=3306
+      - database_sql_database=inventarisierung
+      - database_sql_user=inventarisierung
+      - database_sql_password=inventarisierung
   redis:
     hostname: redis
     image: redis:8.0-M03-alpine3.21
@@ -78,6 +90,24 @@ services:
       interval: 2s
       timeout: 1s
       retries: 20
+  mysql:
+    hostname: mysql
+    image: mysql:9.2.0
+    environment:
+      MYSQL_DATABASE: inventarisierung
+      MYSQL_USER: inventarisierung
+      MYSQL_PASSWORD: inventarisierung
+      MYSQL_ALLOW_EMPTY_PASSWORD: true
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-uinventarisierung", "-pinventarisierung" ]
+      interval: 2s
+      timeout: 10s
+      retries: 20
 
 volumes:
   redis:
+  mysql:
