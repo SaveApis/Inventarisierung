@@ -1,6 +1,6 @@
 ﻿<component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Tests" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
-    <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/tests/Inventarisierung.Tests/Inventarisierung.Tests.csproj" />
+    <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/tests/Backend.Tests/Backend.Tests.csproj" />
     <option name="LAUNCH_PROFILE_TFM" value="net9.0" />
     <option name="LAUNCH_PROFILE_NAME" value="Tests" />
     <option name="USE_EXTERNAL_CONSOLE" value="0" />
