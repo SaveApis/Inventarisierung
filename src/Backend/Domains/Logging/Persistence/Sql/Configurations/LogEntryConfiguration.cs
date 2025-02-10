@@ -19,6 +19,7 @@ public class LogEntryConfiguration : IEntityTypeConfiguration<LogEntry>
 
         builder.Property(e => e.AffectedEntityId).IsRequired().HasConversion<Id.EfCoreValueConverter>();
         builder.Property(e => e.AffectedEntityName).IsRequired().HasConversion<Name.EfCoreValueConverter>();
+        builder.Property(e => e.State).IsRequired().HasConversion<string>();
 
         builder.Property(e => e.LoggedBy).IsRequired(false).HasConversion<Id.EfCoreValueConverter>();
 
