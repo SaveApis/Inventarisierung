@@ -2,9 +2,9 @@
 
 namespace Backend.Domains.Logging.Domain.Entities;
 
-public class LogEntryValue
+public class LogEntryValueEntity
 {
-    private LogEntryValue(Id id, Name attributeName, string? oldValue, string? newValue, Id logEntryId)
+    private LogEntryValueEntity(Id id, Name attributeName, string? oldValue, string? newValue, Id logEntryId)
     {
         Id = id;
         AttributeName = attributeName;
@@ -20,8 +20,8 @@ public class LogEntryValue
 
     public Id LogEntryId { get; }
 
-    public static LogEntryValue Create(Name attributeName, string? oldValue, string? newValue, Id logEntryId)
+    public static LogEntryValueEntity Create(Name attributeName, string? oldValue, string? newValue, Id logEntryId)
     {
-        return new LogEntryValue(Id.From(Guid.NewGuid()), attributeName, oldValue, newValue, logEntryId);
+        return new LogEntryValueEntity(Id.From(Guid.NewGuid()), attributeName, oldValue, newValue, logEntryId);
     }
 }

@@ -10,7 +10,7 @@ public class StartLogEntryCommandHandler(ILoggingDbContextFactory factory) : ICo
 {
     public async Task<Result<Id>> Handle(StartLogEntryCommand request, CancellationToken cancellationToken)
     {
-        var entry = LogEntry.Create(request.Type, request.AffectedEntityId, request.AffectedEntityName, request.LoggedBy);
+        var entry = LogEntryEntity.Create(request.Type, request.AffectedEntityId, request.AffectedEntityName, request.LoggedBy);
 
         await using var context = factory.Create();
 

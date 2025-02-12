@@ -6,9 +6,9 @@ using SaveApis.Core.Common.Infrastructure.Mediator;
 
 namespace Backend.Domains.Logging.Application.Mediator.Queries;
 
-public class GetLogEntriesByEntityIdQueryHandler(ILoggingDbContextFactory factory) : IQueryHandler<GetLogEntriesByEntityId, IEnumerable<LogEntry>>
+public class GetLogEntriesByEntityIdQueryHandler(ILoggingDbContextFactory factory) : IQueryHandler<GetLogEntriesByEntityId, IEnumerable<LogEntryEntity>>
 {
-    public async Task<Result<IEnumerable<LogEntry>>> Handle(GetLogEntriesByEntityId request, CancellationToken cancellationToken)
+    public async Task<Result<IEnumerable<LogEntryEntity>>> Handle(GetLogEntriesByEntityId request, CancellationToken cancellationToken)
     {
         await using var context = factory.Create();
 
@@ -16,6 +16,7 @@ public class GetLogEntriesByEntityIdQueryHandler(ILoggingDbContextFactory factor
             .LogEntries
             .Include(e => e.Values)
             .Where(it => it.AffectedEntityId == request.Id)
+            .OrderByDescending(it => it.LoggedAt)
             .ToListAsync(cancellationToken)
             .ConfigureAwait(false);
     }

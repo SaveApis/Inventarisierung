@@ -21,7 +21,7 @@ public class LoggingController(IMediator mediator) : ControllerBase
         }
 
         var mapper = new LoggingMapper();
-        var response = mapper.ToDto(result.Value).OrderByDescending(it => it.LoggedAt);
+        var response = mapper.ToDto(result.Value);
 
         return Ok(response);
     }

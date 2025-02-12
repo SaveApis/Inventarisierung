@@ -7,10 +7,10 @@ namespace Backend.Domains.Logging.Application.Mapper;
 [Mapper]
 public partial class LoggingMapper
 {
-    public partial LogEntryGetDto ToDto(LogEntry logEntry);
-    public partial IEnumerable<LogEntryGetDto> ToDto(IEnumerable<LogEntry> logEntries);
+    public partial LogEntryGetDto ToDto(LogEntryEntity logEntry);
+    public partial IEnumerable<LogEntryGetDto> ToDto(IEnumerable<LogEntryEntity> logEntries);
 
     [MapperIgnoreSource(nameof(logEntryValue.LogEntryId))]
-    public partial LogEntryValueGetDto ToDto(LogEntryValue logEntryValue);
-    public partial IEnumerable<LogEntryValueGetDto> ToDto(IEnumerable<LogEntryValue> logEntryValues);
+    public partial LogEntryValueGetDto ToDto(LogEntryValueEntity logEntryValue);
+    public partial IEnumerable<LogEntryValueGetDto> ToDto(IEnumerable<LogEntryValueEntity> logEntryValues);
 }

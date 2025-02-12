@@ -9,13 +9,13 @@ public class LoggingDbContext(DbContextOptions options) : BaseDbContext(options)
 {
     protected override string Schema => "Logging";
 
-    public DbSet<LogEntry> LogEntries { get; set; }
+    public DbSet<LogEntryEntity> LogEntries { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.ApplyConfiguration(new LogEntryConfiguration());
-        modelBuilder.ApplyConfiguration(new LogEntryValueConfiguration());
+        modelBuilder.ApplyConfiguration(new LogEntryEntityConfiguration());
+        modelBuilder.ApplyConfiguration(new LogEntryValueEntityConfiguration());
     }
 }

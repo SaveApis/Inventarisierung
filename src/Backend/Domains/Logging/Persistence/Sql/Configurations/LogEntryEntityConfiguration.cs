@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Backend.Domains.Logging.Persistence.Sql.Configurations;
 
-public class LogEntryConfiguration : IEntityTypeConfiguration<LogEntry>
+public class LogEntryEntityConfiguration : IEntityTypeConfiguration<LogEntryEntity>
 {
-    public void Configure(EntityTypeBuilder<LogEntry> builder)
+    public void Configure(EntityTypeBuilder<LogEntryEntity> builder)
     {
         builder.ToTable("Entries");
 

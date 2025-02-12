@@ -8,12 +8,12 @@ namespace Backend.Tests.Domains.Logging;
 
 public abstract class BaseLoggingTest : BaseTest
 {
-    protected static async Task<ICollection<LogEntry>> SeedAsync(IContainer container, int amount = 1, Action<LogEntry>? action = null)
+    protected static async Task<ICollection<LogEntryEntity>> SeedAsync(IContainer container, int amount = 1, Action<LogEntryEntity>? action = null)
     {
-        var entries = new List<LogEntry>();
+        var entries = new List<LogEntryEntity>();
         for (int i = 0; i < amount; i++)
         {
-            var entry = LogEntry.Create(LogEntryType.Create, Id.From(Guid.NewGuid()), Name.From("Test"));
+            var entry = LogEntryEntity.Create(LogEntryType.Create, Id.From(Guid.NewGuid()), Name.From("Test"));
             action?.Invoke(entry);
             entries.Add(entry);
         }
