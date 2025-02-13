@@ -76,6 +76,10 @@ services:
       - database_sql_database=inventarisierung
       - database_sql_user=inventarisierung
       - database_sql_password=inventarisierung
+      - initial_user_firstname=Max
+      - initial_user_lastname=Mustermann
+      - initial_user_email=max.musterman@example.com
+      - initial_user_username=max.musterman
   redis:
     hostname: redis
     image: redis:8.0-M03-alpine3.21

@@ -40,5 +40,9 @@
             <Link>.dockerignore</Link>
         </Content>
     </ItemGroup>
+    
+    <ItemGroup>
+        <InternalsVisibleTo Include="Inventarisierung.Tests" />
+    </ItemGroup>
 
 </Project>

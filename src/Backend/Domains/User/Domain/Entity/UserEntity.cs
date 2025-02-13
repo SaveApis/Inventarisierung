@@ -32,9 +32,9 @@ public class UserEntity : ITrackedEntity
     public UserState State { get; }
     public bool IsInitialUser { get; }
 
-    public static UserEntity Create(Id id, Name firstName, Name lastName, Email email, Name userName, Hash? hash = null, UserState state = UserState.Active, bool isInitialUser = false)
+    public static UserEntity Create(Name firstName, Name lastName, Email email, Name userName, Hash? hash = null, UserState state = UserState.Active, bool isInitialUser = false)
     {
-        return new UserEntity(id, firstName, lastName, email, userName, hash, state, isInitialUser);
+        return new UserEntity(Id.From(Guid.NewGuid()), firstName, lastName, email, userName, hash, state, isInitialUser);
     }
 
     public ICollection<Tuple<string, string?, string?>> GetChanges()
