@@ -4,8 +4,11 @@ services:
       redis:
         condition: service_healthy
         required: true
+      mysql:
+        condition: service_healthy
+        required: true
     hostname: backend
-    image: inventarisierung:dev
+    image: inventarisierung-backend:dev
     build:
       context: ..
       dockerfile: src/Backend/Dockerfile
@@ -17,6 +20,12 @@ services:
       - hangfire_redis_port=6379
       - hangfire_redis_database=0
       - "hangfire_redis_prefix=inventarisierung:prefix:"
+      - database_sql_name=inventarisierung
+      - database_sql_server=mysql
+      - database_sql_port=3306
+      - database_sql_database=inventarisierung
+      - database_sql_user=inventarisierung
+      - database_sql_password=inventarisierung
       - jwt_issuer=inventarisierung
       - jwt_audience=inventarisierung
       - jwt_key=<key>
@@ -28,21 +37,17 @@ services:
         condition: service_healthy
         required: true
     hostname: backend
-    image: inventarisierung:dev
+    image: inventarisierung-backend:dev
     build:
       context: ..
       dockerfile: src/Backend/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_HTTP_PORTS=80
       - server_type=server
       - hangfire_redis_server=redis
       - hangfire_redis_port=6379
       - hangfire_redis_database=0
       - "hangfire_redis_prefix=inventarisierung:prefix:"
-      - jwt_issuer=inventarisierung
-      - jwt_audience=inventarisierung
-      - jwt_key=<key>
     labels:
       com.jetbrains.rider.debug: "false"
   backend-worker:
@@ -50,22 +55,27 @@ services:
       redis:
         condition: service_healthy
         required: true
+      mysql:
+        condition: service_healthy
+        required: true
     hostname: backend
-    image: inventarisierung:dev
+    image: inventarisierung-backend:dev
     build:
       context: ..
       dockerfile: src/Backend/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_HTTP_PORTS=80
       - server_type=worker
       - hangfire_redis_server=redis
       - hangfire_redis_port=6379
       - hangfire_redis_database=0
       - "hangfire_redis_prefix=inventarisierung:prefix:"
-      - jwt_issuer=inventarisierung
-      - jwt_audience=inventarisierung
-      - jwt_key=<key>
+      - database_sql_name=inventarisierung
+      - database_sql_server=mysql
+      - database_sql_port=3306
+      - database_sql_database=inventarisierung
+      - database_sql_user=inventarisierung
+      - database_sql_password=inventarisierung
   redis:
     hostname: redis
     image: redis:8.0-M03-alpine3.21
@@ -78,6 +88,24 @@ services:
       interval: 2s
       timeout: 1s
       retries: 20
+  mysql:
+    hostname: mysql
+    image: mysql:9.2.0
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: inventarisierung
+      MYSQL_USER: inventarisierung
+      MYSQL_PASSWORD: inventarisierung
+      MYSQL_ALLOW_EMPTY_PASSWORD: yes
+    volumes:
+      - mysql:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-uinventarisierung", "-pinventarisierung" ]
+      interval: 5s
+      timeout: 10s
+      retries: 20
 
 volumes:
   redis:
+  mysql:

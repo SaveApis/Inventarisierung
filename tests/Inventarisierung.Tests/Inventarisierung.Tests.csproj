@@ -8,25 +8,25 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Roslynator.Analyzers" Version="4.12.11">
+    <PackageReference Include="Roslynator.Analyzers" Version="4.13.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Roslynator.CodeFixes" Version="4.12.11">
+    <PackageReference Include="Roslynator.CodeFixes" Version="4.13.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Roslynator.Core" Version="4.12.11" />
-    <PackageReference Include="Roslynator.CSharp" Version="4.12.11" />
-    <PackageReference Include="Roslynator.Formatting.Analyzers" Version="4.12.11">
+    <PackageReference Include="Roslynator.Core" Version="4.13.0" />
+    <PackageReference Include="Roslynator.CSharp" Version="4.13.0" />
+    <PackageReference Include="Roslynator.Formatting.Analyzers" Version="4.13.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Roslynator.Refactorings" Version="4.12.11">
+    <PackageReference Include="Roslynator.Refactorings" Version="4.13.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="TUnit" Version="0.10.28" />
+    <PackageReference Include="TUnit" Version="0.12.13" />
   </ItemGroup>
 
   <ItemGroup>
