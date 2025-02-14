@@ -31,7 +31,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Testcontainers.MySql" Version="4.2.0" />
-    <PackageReference Include="TUnit" Version="0.12.14" />
+    <PackageReference Include="Testcontainers.Redis" Version="4.2.0" />
+    <PackageReference Include="TUnit" Version="0.12.21" />
   </ItemGroup>
 
   <ItemGroup>

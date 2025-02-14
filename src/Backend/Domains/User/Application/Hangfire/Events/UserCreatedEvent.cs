@@ -6,4 +6,9 @@ namespace Backend.Domains.User.Application.Hangfire.Events;
 public class UserCreatedEvent : IEvent
 {
     public required Id Id { get; init; }
+
+    public override string ToString()
+    {
+        return Id.ToString();
+    }
 }

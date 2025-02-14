@@ -28,9 +28,22 @@ public class UserEntity : ITrackedEntity
     public Email Email { get; }
 
     public Name UserName { get; }
-    public Hash? Hash { get; }
+    public Hash? Hash { get; private set; }
     public UserState State { get; }
     public bool IsInitialUser { get; }
+
+    public UserEntity WithHash(Hash? hash)
+    {
+        if (Hash == hash)
+        {
+            return this;
+        }
+
+        _changes.Add(Tuple.Create(nameof(Hash), Hash?.Value, hash?.Value));
+        Hash = hash;
+
+        return this;
+    }
 
     public static UserEntity Create(Name firstName, Name lastName, Email email, Name userName, Hash? hash = null, UserState state = UserState.Active, bool isInitialUser = false)
     {

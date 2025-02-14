@@ -27,7 +27,7 @@ public abstract class BaseTest
         assemblyHelper.RegisterAssembly(typeof(Program).Assembly);
         assemblyHelper.RegisterAssembly(typeof(BaseWebModule).Assembly);
 
-        var configuration = ContainerFixture.LoadConfiguration(TestContext.Current?.TestDetails.TestName ?? Guid.NewGuid().ToString().Replace("-", string.Empty));
+        var configuration = ContainerFixture.LoadConfiguration();
 
         var builder = new ContainerBuilder();
         builder.RegisterInstance(configuration).As<IConfiguration>().SingleInstance();
@@ -48,15 +48,15 @@ public abstract class BaseTest
     }
 
     [Before(Assembly)]
-    public static async Task SetupAssembly()
+    public static void SetupAssembly()
     {
-        await ContainerFixture.StartAsync().ConfigureAwait(false);
+        ContainerFixture.Start();
     }
 
     [After(Assembly)]
-    public static async Task TeardownAssembly()
+    public static void TeardownAssembly()
     {
-        await ContainerFixture.StopAsync().ConfigureAwait(false);
+        ContainerFixture.Stop();
     }
 
     protected TValue Resolve<TValue>() where TValue : notnull
