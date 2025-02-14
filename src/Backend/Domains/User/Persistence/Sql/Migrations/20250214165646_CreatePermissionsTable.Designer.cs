@@ -4,6 +4,7 @@ using Backend.Domains.User.Persistence.Sql;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend.Domains.User.Persistence.Sql.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    partial class UserDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250214165646_CreatePermissionsTable")]
+    partial class CreatePermissionsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -137,21 +140,6 @@ namespace Backend.Domains.User.Persistence.Sql.Migrations
                     b.ToTable("Users", "User");
                 });
 
-            modelBuilder.Entity("PermissionEntityUserEntity", b =>
-                {
-                    b.Property<Guid>("PermissionsId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("UsersId")
-                        .HasColumnType("char(36)");
-
-                    b.HasKey("PermissionsId", "UsersId");
-
-                    b.HasIndex("UsersId");
-
-                    b.ToTable("PermissionEntityUserEntity", "User");
-                });
-
             modelBuilder.Entity("Backend.Domains.User.Domain.Entity.PermissionDescriptionEntity", b =>
                 {
                     b.HasOne("Backend.Domains.User.Domain.Entity.PermissionEntity", null)
@@ -166,21 +154,6 @@ namespace Backend.Domains.User.Persistence.Sql.Migrations
                     b.HasOne("Backend.Domains.User.Domain.Entity.PermissionEntity", null)
                         .WithMany("LocalizedNames")
                         .HasForeignKey("PermissionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("PermissionEntityUserEntity", b =>
-                {
-                    b.HasOne("Backend.Domains.User.Domain.Entity.PermissionEntity", null)
-                        .WithMany()
-                        .HasForeignKey("PermissionsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Backend.Domains.User.Domain.Entity.UserEntity", null)
-                        .WithMany()
-                        .HasForeignKey("UsersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

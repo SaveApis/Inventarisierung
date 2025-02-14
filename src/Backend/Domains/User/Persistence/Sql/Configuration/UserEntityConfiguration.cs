@@ -28,5 +28,7 @@ public class UserEntityConfiguration : IEntityTypeConfiguration<UserEntity>
         builder.HasIndex(e => new { e.FirstName, e.LastName }).HasFilter(filter).IsUnique();
         builder.HasIndex(e => e.Email).HasFilter(filter).IsUnique();
         builder.HasIndex(e => e.UserName).HasFilter(filter).IsUnique();
+
+        builder.HasMany(e => e.Permissions).WithMany(e => e.Users);
     }
 }

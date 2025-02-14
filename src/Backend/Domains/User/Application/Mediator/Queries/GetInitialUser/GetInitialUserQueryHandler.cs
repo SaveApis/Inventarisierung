@@ -12,7 +12,13 @@ public class GetInitialUserQueryHandler(IUserDbContextFactory factory) : IQueryH
     {
         await using var context = factory.Create();
 
-        var user = await context.Users.SingleOrDefaultAsync(it => it.IsInitialUser, cancellationToken: cancellationToken).ConfigureAwait(false);
+        var user = await context.Users
+            .Include(e => e.Permissions)
+            .ThenInclude(e => e.LocalizedNames)
+            .Include(e => e.Permissions)
+            .ThenInclude(e => e.LocalizedDescriptions)
+            .SingleOrDefaultAsync(it => it.IsInitialUser, cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
 
         return user ?? (Result<UserEntity>)Result.Fail("Initial user not found");
     }

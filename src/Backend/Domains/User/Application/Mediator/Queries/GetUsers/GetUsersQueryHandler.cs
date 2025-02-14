@@ -12,6 +12,12 @@ public class GetUsersQueryHandler(IUserDbContextFactory factory) : IQueryHandler
     {
         await using var context = factory.Create();
 
-        return await context.Users.ToListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+        return await context.Users
+            .Include(e => e.Permissions)
+            .ThenInclude(e => e.LocalizedNames)
+            .Include(e => e.Permissions)
+            .ThenInclude(e => e.LocalizedDescriptions)
+            .ToListAsync(cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
     }
 }

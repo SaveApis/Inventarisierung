@@ -32,6 +32,8 @@ public class UserEntity : ITrackedEntity
     public UserState State { get; }
     public bool IsInitialUser { get; }
 
+    public virtual List<PermissionEntity> Permissions { get; set; } = [];
+
     public UserEntity WithHash(Hash? hash)
     {
         if (Hash == hash)

@@ -1,6 +1,7 @@
 ﻿using Backend.Domains.User.Domain.Entity;
 using Backend.Domains.User.Persistence.Sql;
 using FluentResults;
+using Microsoft.EntityFrameworkCore;
 using SaveApis.Core.Common.Infrastructure.Mediator;
 
 namespace Backend.Domains.User.Application.Mediator.Queries.GetUserById;
@@ -11,7 +12,13 @@ public class GetUserByIdQueryHandler(IUserDbContextFactory factory) : IQueryHand
     {
         await using var context = factory.Create();
 
-        var existingUser = await context.Users.FindAsync([request.Id], cancellationToken).ConfigureAwait(false);
+        var existingUser = await context.Users
+            .Include(e => e.Permissions)
+            .ThenInclude(e => e.LocalizedNames)
+            .Include(e => e.Permissions)
+            .ThenInclude(e => e.LocalizedDescriptions)
+            .SingleOrDefaultAsync(e => e.Id == request.Id, cancellationToken)
+            .ConfigureAwait(false);
 
         return existingUser is null
             ? Result.Fail<UserEntity>($"User with id '{request.Id}' not found")
